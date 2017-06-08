@@ -20,14 +20,14 @@ NeutronFit_BC537::NeutronFit_BC537(int run_num) :
     
     double energy_vector[] = 
     {
-        0.66201 ,0.80879    ,1.05264    ,1.21767    ,2.96445    ,2.86088    ,2.69813    ,2.48962    ,2.25152    ,
-        2.00070 ,1.75268    ,1.52003    ,2.27882    ,2.60832    ,2.95748    ,3.30884    ,3.64108    ,3.93118    ,
-        4.15713 ,4.30074    ,1.98127    ,1.72261    ,1.50509    ,1.50509    ,1.72261    ,1.98127    ,0.81657    ,
-        0.95882 ,1.11930    ,1.29208    ,1.46825    ,1.63655    ,1.78465    ,1.90062    ,1.97458    ,0.69544    ,
-        0.59575 ,0.51611    ,0.45421    ,0.38915    ,0.68765    ,0.65189    ,0.59641    ,0.48874    ,0.37184    ,
-        0.26609 ,0.18371    ,0.12684    ,0.10089    ,0.07506    ,0.05996    ,0.05996    ,7.90894    ,7.64353    ,
-        7.22603 ,6.69019    ,6.07682    ,5.42853    ,4.78473    ,4.17760    ,3.62976    ,3.15389    ,2.75400    ,
-        2.42779 
+        0.687649    ,0.651889    ,0.596412    ,0.526792    ,0.488742    ,0.371838    ,0.266086    ,0.18371      ,0.18371     ,0.126838    ,
+        0.100888    ,0.075058    ,0.059957    ,0.816573    ,0.695436    ,0.595748    ,0.516107    ,0.45421      ,0.389146    ,1.974584    ,
+        1.900621    ,1.784647    ,1.636554    ,1.46825     ,1.292083    ,1.119299    ,0.958821    ,0.816573     ,2.964447    ,2.860877    ,
+        2.698133    ,2.48962     ,2.251518    ,2.000698    ,1.752682    ,1.520026    ,1.217669    ,1.052637     ,0.808785    ,0.662011    ,
+        3.308838    ,2.957477    ,2.608323    ,2.278822    ,1.981274    ,1.722613    ,1.50509     ,1.03544      ,4.300737    ,4.157133    ,
+        3.931182    ,3.641081    ,3.308838    ,7.908938    ,7.643525    ,7.226025    ,6.690194    ,6.076821     ,5.428531    ,4.784732    ,
+        4.177603    ,3.629763    ,3.153886    ,17.945689   ,12.526461   ,20.907393   ,20.634645   ,20.196496    ,19.615953   ,18.9222     ,
+        18.148086   ,17.327541   ,16.493228   ,15.674682   ,14.897078   ,14.180666   ,13.540783   ,12.988332    ,12.338569   
     };
     fEnergy = energy_vector[fRunNum];
 
@@ -60,7 +60,6 @@ NeutronFit_BC537::NeutronFit_BC537(int run_num) :
         300,300,100,80,70,80,60,60,55,50,50,50
     };
     fCutoffLow = cutoff_low_vector[fRunNum];
-    
     
     //double cutoff_high_vector[] =
     //{
@@ -105,12 +104,15 @@ NeutronFit_BC537::NeutronFit_BC537(int run_num) :
     fExpHist->GetXaxis()->SetTitleOffset(0.75);
     fExpHist->GetXaxis()->SetTitleSize(0.05);
     fExpHist->SetStats(false);
-    ApplyCutoffLow(fCutoffLow,"exp");
     fExpBinNum = fExpHist->GetNbinsX();
     fExpBinHigh = fExpHist->GetBinLowEdge(fExpBinNum+1);
     fExpBinLow = fExpHist->GetBinLowEdge(1);
+    fCutoffHigh = fExpBinHigh;
+    fCutoffLow = fExpBinLow;
+    ApplyCutoffLow(fCutoffLow,"exp");
     
-    std::string name = "~/data/smearing/prototype/G4_RAW/Sim" + std::to_string(fRunNum) + "/g4out.root";
+    //std::string name = "~/data/smearing/prototype/G4_RAW/Sim" + std::to_string(fRunNum) + "/g4out.root";
+    std::string name = "/nessa/geant4/joey/data/smearing/prototype/G4_RAW/Sim" + std::to_string(fRunNum) + "/g4out.root";
     fSimFile = TFile::Open(name.c_str());     
 
     fSimTree = (TTree*)(fSimFile->Get("ntuple/ntuple")); 
@@ -151,6 +153,8 @@ NeutronFit_BC537::NeutronFit_BC537(int run_num) :
 
     std::cout << "Run# = " << fRunNum << " ; Energy = " << fEnergy << " MeV ; cutoff(low,high) = (" << fCutoffLow << ","; 
     std::cout << fCutoffHigh << ") " << " ; #evts ratio = " << double(fSimSortMax)/double(fExpHist->GetEntries()) << std::endl;
+    
+    fSimSortMax = fNumEntries;
 
     //fExpHist->Rebin(5);
     //if(fExpBinNum == 50100) fExpHist->Rebin(10);
