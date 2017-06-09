@@ -230,7 +230,7 @@ vec Fitter::NelderMead(vec initial_vec, int itermax)
     double inc1 = 0.01;  // a2
     double inc2 = 0.01; // a3
     double inc3 = 0.01;  // a4
-    double inc4 = 0.0001;  // carbon
+    double inc4 = 0.005;  // carbon
     double inc5 = 0.05; // A
     double inc6 = 0.02; // B
     double inc7 = 0.0005; // C

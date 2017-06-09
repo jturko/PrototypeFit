@@ -17,7 +17,7 @@ NeutronFit_BC537::NeutronFit_BC537(int run_num) :
     fFitFunc(NULL),
     fRebin(false)
 {
-    
+ 
     double energy_vector[] = 
     {
         0.687649    ,0.651889    ,0.596412    ,0.526792    ,0.488742    ,0.371838    ,0.266086    ,0.18371      ,0.18371     ,0.126838    ,
@@ -31,63 +31,21 @@ NeutronFit_BC537::NeutronFit_BC537(int run_num) :
     };
     fEnergy = energy_vector[fRunNum];
 
-    //double cutoff_low_vector[] =
-    //{
-    //    40      ,40     ,50     ,50     ,50     ,50     ,50     ,50     ,50     ,
-    //    50      ,50     ,50     ,50     ,50     ,50     ,50     ,50     ,50     ,
-    //    50      ,50     ,50     ,50     ,50     ,
-
-    //    17     ,17     ,20     ,8.5    ,
-    //    8.5     ,15     ,15     ,15     ,15     ,15     ,15     ,15     ,8.5    ,
-    //    8.5     ,8.5    ,8.5    ,8.5    ,8.5    ,8.5    ,8.5    ,8.5    ,8.5    ,
-    //    8.5     ,8.5    ,8.5    ,8.5    ,8.5    ,8.5    ,8.5    ,500    ,500    ,  
-    //    200     ,200    ,200    ,200    ,200    ,200    ,200    ,150    ,150    ,
-    //    150 
-    //};
     double cutoff_low_vector[] =
     {
-        40      ,40     ,50     ,50     ,50     ,50     ,50     ,50     ,50     ,
-        50      ,50     ,50     ,50     ,50     ,50     ,50     ,50     ,50     ,
-        50      ,50     ,50     ,50     ,50     ,
-
-        10      ,10     ,10     ,10     ,10     ,10     ,10     ,10     ,10     ,
-        10      ,10     ,10     ,10     ,10     ,10     ,10     ,10     ,10     ,
-        10      ,10     ,10     ,10     ,10     ,10     ,10     ,10     ,9      ,
-        9   ,
-
-        3    ,
-        
-        300,300,100,80,70,80,60,60,55,50,50,50
+        0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,40  ,
+        40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,
+        40  ,40  ,40  ,40  ,40  ,40  ,40  ,40  ,210 ,210 ,205 ,205 ,205 ,240 ,250 ,260 ,250 ,280 ,280 ,290 ,
+        290 ,260 ,280 ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   ,0   
     };
     fCutoffLow = cutoff_low_vector[fRunNum];
     
-    //double cutoff_high_vector[] =
-    //{
-    //    110     ,130    ,180 ,230 ,800     ,700    ,650     ,600     ,500   ,
-    //    430     ,370    ,300 ,500 ,620     ,750    ,880     ,1000    ,1100  ,
-    //    1200    ,1300   ,430 ,360 ,300     ,
-    //    
-    //    425    ,540     ,600     ,200   ,
-    //    240     ,300    ,350 ,420 ,500     ,550    ,600     ,620     ,160   ,
-    //    130     ,110    ,95  ,75  ,165     ,155    ,130     ,110     ,75    ,
-    //    55      ,   45  ,35  ,30  ,25      ,25     ,25      ,4150    ,4000  ,
-    //    3650    ,3200   ,2800,2500,2050    ,1750   ,1400    ,1100    ,900   ,
-    //    750        
-    //};
     double cutoff_high_vector[] =
     {
-        110     ,130    ,180 ,230 ,800     ,700    ,650     ,600     ,500   ,
-        430     ,370    ,300 ,500 ,620     ,750    ,880     ,1000    ,1100  ,
-        1200    ,1300   ,430 ,360 ,300     ,
-
-        320     ,400    ,480    ,160    ,180    ,220    ,260    ,310    ,360    ,
-        410     ,440    ,480    ,110    ,100    ,90     ,80     ,70     ,130    ,
-        120     ,110    ,90     ,70     ,55     ,44     ,34     ,32     ,26     ,
-        26  ,
-        
-        22      ,
-
-        3100,3000,2680,2500,2170,1850,1560,1250,1050,825,650,575
+        190 ,170 ,150 ,130 ,120 ,90  ,60  ,45  ,45  ,35  ,35  ,30  ,30  ,190 ,170 ,130 ,120 ,100 ,85  ,500 ,
+        460 ,420 ,360 ,320 ,270 ,215 ,180 ,140 ,850 ,800 ,735 ,650 ,550 ,460 ,380 ,310 ,230 ,190 ,140 ,110 ,
+        940 ,810 ,690 ,560 ,460 ,380 ,310 ,185 ,1070,1010,945 ,850 ,750 ,5000,4900,4500,4000,3500,3050,2600,
+        2150,1700,1400,4500,3100,3700,3750,5200,3000,3000,3000,4000,4000,3750,3550,3400,3500,3400,3000       
     };
     fCutoffHigh = cutoff_high_vector[fRunNum];
  
@@ -107,12 +65,12 @@ NeutronFit_BC537::NeutronFit_BC537(int run_num) :
     fExpBinNum = fExpHist->GetNbinsX();
     fExpBinHigh = fExpHist->GetBinLowEdge(fExpBinNum+1);
     fExpBinLow = fExpHist->GetBinLowEdge(1);
-    fCutoffHigh = fExpBinHigh;
-    fCutoffLow = fExpBinLow;
+    //fCutoffHigh = fExpBinHigh;
+    //fCutoffLow = fExpBinLow;
     ApplyCutoffLow(fCutoffLow,"exp");
-    
-    //std::string name = "~/data/smearing/prototype/G4_RAW/Sim" + std::to_string(fRunNum) + "/g4out.root";
-    std::string name = "/nessa/geant4/joey/data/smearing/prototype/G4_RAW/Sim" + std::to_string(fRunNum) + "/g4out.root";
+
+    std::string name = "~/data/smearing/prototype/G4_RAW/Sim" + std::to_string(fRunNum) + "/g4out.root";
+    //std::string name = "/nessa/geant4/joey/data/smearing/prototype/G4_RAW/Sim" + std::to_string(fRunNum) + "/g4out.root";
     fSimFile = TFile::Open(name.c_str());     
 
     fSimTree = (TTree*)(fSimFile->Get("ntuple/ntuple")); 
@@ -140,8 +98,8 @@ NeutronFit_BC537::NeutronFit_BC537(int run_num) :
     fParameters[6] = 0.125;
     fParameters[7] = 0.0074;
     SetParameters(fParameters);
-   
-    fOffset = 8.5;
+  
+    fOffset = 0;
 
     //fSimSortMax = 200000;
     
@@ -156,7 +114,13 @@ NeutronFit_BC537::NeutronFit_BC537(int run_num) :
     
     fSimSortMax = fNumEntries;
 
-    //fExpHist->Rebin(5);
+    TF1 * tmpFit = NULL;
+    tmpFit = fExpHist->GetFunction("fit");
+    if(tmpFit) tmpFit->SetBit(TF1::kNotDraw);
+    tmpFit = fExpHist->GetFunction("");
+    if(tmpFit) tmpFit->SetBit(TF1::kNotDraw);
+
+    fExpHist->Rebin(10);
     //if(fExpBinNum == 50100) fExpHist->Rebin(10);
 
 }
@@ -225,7 +189,7 @@ void NeutronFit_BC537::Sort(double * par)
     for(int i=0; i<fSimSortMax; i++)
     {
         counter++;
-        //if( counter%50000==0 ) std::cout << "sorting " << fEnergy << " MeV... " << "evt " << counter << "/" << fSimSortMax << "; " << double(counter)/double(fSimSortMax)*100 << "% complete \r"  << std::flush; 
+        if( counter%50000==0 ) std::cout << "sorting " << fEnergy << " MeV... " << "evt " << counter << "/" << fSimSortMax << "; " << double(counter)/double(fSimSortMax)*100 << "% complete \r"  << std::flush; 
      
         fEdepBranch->GetEntry(i);   
         fEkinBranch->GetEntry(i);   
@@ -289,7 +253,7 @@ void NeutronFit_BC537::Sort(double * par)
     ApplyCutoffLow(fCutoffLow,"sim");    
     fSimHist->Scale(fExpHist->Integral(fExpHist->FindBin(fCutoffLow),fExpHist->FindBin(fCutoffHigh),"width")/fSimHist->Integral(fSimHist->FindBin(fCutoffLow),fSimHist->FindBin(fCutoffHigh),"width"));
     fSimHist->SetStats(false);
-    //std::cout << "sorting " << fEnergy << " MeV... done!                                                   " << std::endl;
+    std::cout << "sorting " << fEnergy << " MeV... done!                                                   " << std::endl;
 
     std::string title = std::to_string(fEnergy) + " MeV - Run " + std::to_string(fRunNum) + "; #chi^{2} = " + std::to_string(DoChi2());
     fExpHist->SetTitle(title.c_str());
