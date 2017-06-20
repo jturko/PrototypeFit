@@ -49,7 +49,7 @@ NeutronFit_BC537::NeutronFit_BC537(int run_num) :
     };
     fCutoffHigh = cutoff_high_vector[fRunNum];
  
-    fExpFile = TFile::Open("~/data/prototype2013.root"); 
+    fExpFile = TFile::Open("~/data/new2013.root"); 
 
     std::string hist_name = "WhiteCal" + std::to_string(fRunNum);
     std::string title = std::to_string(fEnergy) + " MeV";
